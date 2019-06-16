@@ -1,5 +1,7 @@
 # Gambling Ninja Odds Plugin #
 
+Developed for WordPress
+
 This code was originally developed by myself, part of the Gambling Ninja brand. Due to time constraints and the fact I don't think there is anything on the market, that does anything similiar - I have decided to release this for free, open source and hopefully encourage people to contribute code and fixes. The current version as of today DOES have bugs, but hopefully the community can come together to support.
 
 I have created a official forum located here: https://gamblingninja.com/forum/forum/odds-plugin-official/
