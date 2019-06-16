@@ -6,7 +6,9 @@ This README would normally document whatever steps are necessary to get your app
 
 * For this plugin to work you NEED a BetFair Developer account.
 * Enter username/password/app key here: \app\win_nr\includes
+* Get API key from https://www.football-data.org/ and enter it in app\football\lib\config.ini and \app\football\getTeams.php
 * Upload and activate the plugin, ensure you read the steps on the options page (setting up cron jobs)
+
 
 ### You need to create the following pages ###
 
