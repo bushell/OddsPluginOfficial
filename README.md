@@ -4,6 +4,8 @@ This code was originally developed by myself, part of the Gambling Ninja brand. 
 
 I have created a official forum located here: https://gamblingninja.com/forum/forum/odds-plugin-official/
 
+A demo can be seen here: https://bushell.net/demo
+
 ### Install Plugin ###
 
 * For this plugin to work you NEED a BetFair Developer account.
