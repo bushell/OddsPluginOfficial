@@ -1,0 +1,400 @@
+<style>
+	.tooltip-init {
+		position: relative;
+		display: inline-block;
+	}
+
+	.tooltip-init .tooltiptext {
+		visibility: hidden;
+		width: 120px;
+		background-color: black;
+		color: #fff;
+		text-align: center;
+		border-radius: 6px;
+		padding: 5px 0;
+		position: absolute;
+		z-index: 1;
+		top: 150%;
+		left: 50%;
+		margin-left: -60px;
+	}
+
+	.tooltip-init .tooltiptext::after {
+		content: "";
+		position: absolute;
+		bottom: 100%;
+		left: 50%;
+		margin-left: -5px;
+		border-width: 5px;
+		border-style: solid;
+		border-color: transparent transparent black transparent;
+	}
+
+	.tooltip-init:hover .tooltiptext {
+		visibility: visible;
+	}
+
+	.bestOdds {
+		text-decoration: underline !important;
+	}
+	.bestOdds button {
+		text-decoration: underline !important;
+		/*content: '<i class="fas fa-certificate"></i>';*/
+}
+
+	a.active {
+		color: #2a6496;
+		text-decoration: underline;
+	}
+
+	.inline-block {
+		display: inline-block;
+	}
+
+	.tick_icon{
+		color: #3aaa35;
+		font-size: 18px;	
+		display: inline-block;
+		text-shadow: 0px 0px 3px #000;
+	}
+	th {
+	    text-align: center;
+	}
+
+	td {
+	    text-align: center;
+	}
+	.race-details {
+		display: block;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		float: none;
+		background: #f4f4f4;
+		width: 100%;
+		border-bottom: 1px solid #e9e9e9;
+		min-height: 71px;
+		padding: 15px
+	}
+
+	.race-details:last-child {
+		border: none
+	}
+
+	.race-details.hide {
+		display: none
+	}
+
+	.race-details:first-child {
+		border-top: none;
+		border-bottom: 1px solid #e9e9e9 !important
+	}
+
+	.all-todays-races,
+	.all-todays-races .racing-time,
+	.show-times .venue-details {
+		float: none;
+		display: inline-block;
+		vertical-align: middle
+	}
+
+	.venue-details {
+		width: 180px;
+		display: inline;
+		padding: 0
+	}
+
+	.venue-details .venue {
+		text-decoration: none;
+		color: #323232
+	}
+
+	.all-todays-races {
+		width: 500px
+	}
+
+	.racing-time {
+		margin-right: 10px;
+		width: 50px
+	}
+
+		.nonerunner{
+		background: #cecbcb !important;
+	}
+
+	.racing-time .time {
+		color: #323232
+	}
+
+	.racing-time .results,
+	.racing-time .time {
+		background: 0 0;
+		padding: 5px 0;
+		height: 28px;
+		border-radius: 3px
+	}
+
+	.racing-time .results:hover,
+	.racing-time .time:hover,
+	.venue-details .venue:hover {
+		background: 0 0;
+		color: inherit !important;
+		text-decoration: underline
+	}
+
+	.venue-details p {
+		margin: 0;
+	}
+
+	.abandoned .racing-time .time,
+	.abandoned .venue-details .venue,
+	.racing-time .results {
+		background: 0 0;
+		color: rgba(50, 50, 50, .7) !important
+	}
+
+	#sub-events .next-event,
+	.fixture .next-event,
+	.inner-nav-popout .next-event,
+	.show-times .next-event {
+		background: #3cba0d !important;
+		color: #fff !important;
+		border-radius: 3px
+	}
+
+	#mc .show-times h2 {
+		border-bottom: none
+	}
+
+	.caption {
+		font-size: 16px !important;
+		line-height: 20px !important;
+		font-weight: 500 !important;
+	}
+</style>
+<script>
+	// $(document).ready(function () {
+	// 	$('[data-toggle="tooltip"]').tooltip();
+	// });
+</script>
+<div class="container">
+
+	<div style="padding-top: 100px;" ng-show="is_loading">
+		<h1 style="font-size: 60px;">
+			<i class="fa fa-spinner fa-spin"></i>
+		</h1>
+	</div>
+	<div>
+		<a style="cursor:pointer" ng-click="changeView('football')">Football</a>
+	</div>
+
+	<div class="row" style="height:70px !important;">
+		<div class="col-lg-6">
+			<h5>Horse Racing Betting</h5>
+			<h6>UK & Ireland Horse Racing</h6>
+		</div>
+		<div class="col-lg-6" ng-if="!runners">
+			<a href="javascript:void(0)" ng-class="{'active' : currentFilter === 'today'}" ng-click="filterData('today')">Today</a>
+			<a href="javascript:void(0)" ng-class="{'active' : currentFilter === 'tomorrow'}" ng-click="filterData('tomorrow')">Tomorrow</a>
+			<a href="javascript:void(0)" ng-class="{'active' : currentFilter === 'nextday'}" ng-click="filterData('nextday')">Next day
+			</a>
+		</div>
+	</div>
+	<div class="row">
+		<!-- <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
+			<div class="list-group" ng-repeat="(key, value) in data | groupBy:'event.countryCode'">
+				<a class="list-group-item active">
+					{{key}}
+				</a>
+				<a ng-repeat="(keyInner,valueInner) in value | groupBy:'event.venue'" class="list-group-item" ng-click="showEventDetails(keyInner,valueInner)">{{keyInner}}
+				<i class="fa fa-chevron-right" style="float:right;"></i>
+				</a>
+			</div>
+		</div>
+		<div class="col-lg-5 col-md-6 col-sm-12 col-xs-12" ng-if="events">
+			<div class="list-group">
+				<a class="list-group-item active">
+					{{eventTitle}}
+				</a>
+			
+				<a ng-repeat="(key, value) in events" class="list-group-item" ng-click="showRunners(value.marketStartTime,value.marketName,value.runners,value.marketStartTime,value, value.marketId)">
+					{{value.marketStartTime | date:'dd-MMMM-yyyy h:mma'}} - {{value.marketName}}
+					<any  style="float: right;"> 
+						<i class="fa fa-user"></i> {{value.runners.length}}
+
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						<i class="fa fa-chevron-right"></i>
+					</any>
+				</a>
+			</div>
+		</div> -->
+		<div class="col-lg-8" ng-if="!runners">
+
+			<div class="race-meets-container">
+				<div class="race-meets">
+					<div class="race-details" ng-repeat="(key, value) in data  | groupBy:'event.venue' ">
+						<div class="venue-details">
+							<p>
+								<span class="flag-wrap">
+									<span class="round-flag smaller round-flag-GB">
+										<img ng-src="images/{{value[0].event.countryCode}}.png" />
+									</span>
+								</span>
+								<a class="venue caption" href="javascript:void(0);" >{{key}}</a>
+							</p>
+						</div>
+						<div class="all-todays-races">
+							<div class="racing-time" ng-repeat="item in value">
+								<a href="javascript:void(0);" ng-click="showRunners(item.marketStartTime,item.marketName,item.runners,item.marketStartTime,item, item.marketId); getTitle(value)"
+								    class="beta-footnote race-time time results">{{item.marketStartTime | date : 'h:mma'}}</a>
+							</div>
+						</div>
+					</div>
+					<div class="race-details" ng-if="!is_loading && data.length === 0">
+						<p>No Data found, try checking the racecard for
+							<a href="javascript:void(0)" ng-class="{'active' : currentFilter === 'tomorrow'}" ng-click="filterData('tomorrow')">tomorrow</a>.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-lg-8" ng-if="runners">
+			<span class="list-group-item active">
+				{{title}} - {{runnerLength}} - {{datetime | date:'dd-MMMM-yyyy h:mma'}} - {{eventMarkertName}}
+				<a href="javascript:void(0)" style="float: right;" ng-click="showEvent()">Back to event</a>
+			</span>
+			<div class="table-responsive">
+				<table class="table">
+					<thead style="background-color: #dfdfdf;">
+						<tr>
+							<th>Sign-up Bonus</th>
+							<th ng-if="is_show_williamhill" style="background: #02143c;color: #ffffff !important">&pound;20</th>
+							<th ng-if="is_show_betfred" style="background: #084284;color: #ffffff !important">&pound;50</th>
+							<th ng-if="is_show_smarkets" style="background-color: #01211c; color: #ffffff !important;">&pound;30</th>
+							<th ng-if="is_show_betfair" style="background: #fab50f;">&pound;10</th>
+							<th ng-if="is_show_matchbook" style="background: #e71b1d;color: white">&pound;25</th>
+							<th style="background: #3aaa35;color: #ffffff !important">&pound;15</th>
+							<th style="background: #fb6740;color: #ffffff !important">&pound;35</th>
+						</tr>
+						<tr>
+							<th>Special Offer</th>
+							<th ng-if="is_show_williamhill" style="background: #02143c;color: #ffffff !important"><i class="fas fa-check-circle tick_icon"></i></th>
+							<th ng-if="is_show_betfred" style="background: #084284;color: #ffffff !important"><i class="fas fa-check-circle tick_icon"></i></th>
+							<th ng-if="is_show_smarkets" style="background-color: #01211c;"><i class="fas fa-check-circle tick_icon"></i></th>
+							<th ng-if="is_show_betfair" style="background: #fab50f;"><i class="fas fa-check-circle tick_icon"></i></th>
+							<th ng-if="is_show_matchbook" style="background: #e71b1d;color: white"><i class="fas fa-check-circle tick_icon"></i></th>
+							<th style="background: #3aaa35;color: white"><i class="fas fa-check-circle tick_icon"></i></th>
+							<th style="background: #fb6740;color: #ffffff !important"><i class="fas fa-check-circle tick_icon"></i></th>
+						</tr>
+						<tr>
+							<th>Best Odds Guarenteed</th>
+							<th ng-if="is_show_williamhill" style="background: #02143c;color: #ffffff !important"><i class="fas fa-check-circle tick_icon"></i></th>
+							<th ng-if="is_show_betfred" style="background: #084284;color: #ffffff !important"><i class="fas fa-check-circle tick_icon"></i></th>
+							<th ng-if="is_show_smarkets" style="background-color: #01211c;"><i class="fas fa-check-circle tick_icon"></i></th>
+							<th ng-if="is_show_betfair" style="background: #fab50f;"><i class="fas fa-check-circle tick_icon"></i></th>
+							<th ng-if="is_show_matchbook" style="background: #e71b1d;color: white"><i class="fas fa-check-circle tick_icon"></i></th>
+							<th style="background: #3aaa35;color: white"><i class="fas fa-check-circle tick_icon"></i></th>
+							<th style="background: #fb6740;color: #ffffff !important"><i class="fas fa-check-circle tick_icon"></i></th>
+						</tr>
+						<tr>
+							<th>Name</th>
+							<th ng-if="is_show_williamhill" style="background: #02143c;color: #ffffff !important"><img src="images/william-hill.png" /></th>
+							<th ng-if="is_show_betfred" style="background: #084284;color: #ffffff !important"><img src="images/betfred.png" /></th>
+							<th ng-if="is_show_smarkets" style="background-color: #01211c;"><img src="images/smarkets.png" /></th>
+							<th ng-if="is_show_betfair" style="background: #fab50f;"><img src="images/betfair-exchange.jpg" /></th>
+							<th ng-if="is_show_matchbook" style="background: #e71b1d;color: white"><img src="images/matchbook.png" /></th>
+							<th style="background: #3aaa35;color: white"><img src="images/unibet.png" /></th>
+							<th style="background: #fb6740;color: #ffffff !important"><img src="images/leovegas.png" /></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="(key, value) in runners track by $index" style="background-color: #f2f2f2;">
+							<td style="color: #555;">
+								<img style="border: 1px solid #dddddd; border-radius: 20%;" src="https://content-cache.cdnbf.net/feeds_images/Horses/SilkColours/{{value.metadata.COLOURS_FILENAME}}"/> {{value.metadata.CLOTH_NUMBER_ALPHA}}. {{value.runnerName}}<br>
+								<strong>Jockey: </strong> {{value.metadata.JOCKEY_NAME}}
+								<div class="tooltip-init"><i class="fas fa-info-circle"></i>
+									<span class="tooltiptext" style="padding:5px; text-align:left;">
+										<span style="text-align: center; text-decoration: underline;"><i class="fas fa-info-circle"></i> INFO</span><br>
+										<span>
+										Sire: {{value.metadata.SIRE_NAME}} <br>
+										Dam: {{value.metadata.DAM_NAME}} <br>
+										Weight: {{value.metadata.WEIGHT_VALUE}} {{value.metadata.WEIGHT_UNITS}} <br>
+										Sex: {{value.metadata.SEX_TYPE}} <br>
+										Last Run: {{value.metadata.DAYS_SINCE_LAST_RUN}} days<br>
+										Owner: {{value.metadata.OWNER_NAME}}<br>
+										Trainer: {{value.metadata.TRAINER_NAME}}
+										Age: {{value.metadata.AGE}}<br>
+										Bred: {{value.metadata.BRED}} <br>
+										Form: {{value.metadata.FORM}}
+									</span>
+									</span>
+								</div>
+							</td>
+							<td style="vertical-align: middle;" ng-if="is_show_williamhill">
+								<div ng-click="goToWilliamHill($index)" ng-class="{bestOdds: (hierarchyByMarketType[$index] >= horseRacingdecimalPrice[$index]) && (hierarchyByMarketType[$index] >= marketPrice[$index]) }">
+									<button type="button" style="min-width: 52px; max-width: 52px; font-weight: 600;font-size: 12px;background: #02143c;color: #f1f30b;" class="btn">
+										<img ng-if="!hierarchyByMarketType[$index] && hierarchyByMarketType[$index] !== 'N/A'" src="images/ajaxSpinner.gif" alt="Spinner"
+											height="16" width="16" /> {{ hierarchyByMarketType[$index] }}
+									</button>
+								</div>
+							</td>
+							<td style="vertical-align: middle;" ng-if="is_show_betfred" >
+								<div ng-click="horseRacingdecimalButton($index)" ng-class="{bestOdds: (matchbookOdds[$index] > marketPrice[$index])}">
+									<button type="button" style="min-width: 52px; max-width: 52px; font-weight: 600;font-size: 12px;background: #084284; color: #ffffff" class="btn">
+										<img ng-if="!horseRacingdecimalPrice[$index] && horseRacingdecimalPrice[$index] !== 'N/A'" src="images/ajaxSpinner.gif" alt="Spinner"
+											height="16" width="16" /> {{ horseRacingdecimalPrice[$index] }}
+									</button>
+								</div>
+							</td>
+							<td style="vertical-align: middle;" ng-if="is_show_smarkets">
+								<div ng-click="greenButton($index)">									
+									<button type="button" style="min-width: 52px; max-width: 52px; font-weight: 600;font-size: 12px;background: #00B073;" class="btn">
+										<img ng-if="!decimalPrice[$index] && decimalPrice[$index] !== 'N/A'" src="images/ajaxSpinner.gif" alt="Spinner" height="16"
+											width="16" /> {{ decimalPrice[$index] }}
+									</button>		
+								</div>
+							</td>
+							<td style="vertical-align: middle;" ng-if="is_show_betfair">
+								<div ng-click="yelloButton(globalMarketId)" ng-class="{bestOdds: (marketPrice[$index] > matchbookOdds[$index]) }">
+									<button type="button" style="min-width: 52px; max-width: 52px; font-weight: 600;font-size: 12px;background: #fab50f;" class="btn">
+										<img ng-if="!marketPrice[$index] && marketPrice[$index] !== 0" src="images/ajaxSpinner.gif" alt="Spinner" height="16" width="16"
+										/> {{ marketPrice[$index] }}	
+									</button>
+								</div>
+							</td>
+							<td style="vertical-align: middle;" ng-if="is_show_matchbook">
+								<div ng-click="matchbookOddsButton()" ng-class="{bestOdds: (matchbookOdds[$index] > marketPrice[$index])}">
+									<button type="button" style="min-width: 52px; max-width: 52px; font-weight: 600;font-size: 12px;background: #e71b1d;color: white" class="btn">
+										<img ng-if="!matchbookOdds[$index] && matchbookOdds[$index] !== 'N/A'" src="images/ajaxSpinner.gif" alt="Spinner" height="16"
+											width="16" /> {{ matchbookOdds[$index] }}
+									</button>
+								</div>
+							</td>
+
+							<td style="vertical-align: middle;">
+								<div>
+									<button type="button" style="min-width: 52px; max-width: 52px; font-weight: 600;font-size: 12px;background: #3aaa35;color: white" class="btn">
+										<img ng-if="!unibetArr[$index] && unibetArr[$index] !== 'N/A'" src="images/ajaxSpinner.gif" alt="Spinner" height="16"
+										width="16" /> {{ unibetArr[$index] }}
+									</button>
+								</div>
+							</td>
+
+
+							<td style="vertical-align: middle;">
+								<div>
+									<button type="button" style="min-width: 52px; max-width: 52px; font-weight: 600;font-size: 12px;background: #fb6740;color: white" class="btn">
+										<img ng-if="!lasVegasOdds[$index] && lasVegasOdds[$index] !== 'N/A'" src="images/ajaxSpinner.gif" alt="Spinner" height="16"
+										width="16" /> {{ lasVegasOdds[$index] }}
+									</button>
+								</div>
+							</td>
+
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<span>Best odds <u>underlined</u>.</span>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,163 @@
+/* from bootsrap */
+
+.pull-right {
+    float: right !important;
+}
+
+.pull-left {
+    float: left !important;
+}
+
+.hide {
+    display: none !important;
+}
+
+.show {
+    display: block !important;
+}
+
+.invisible {
+    visibility: hidden;
+}
+
+table {
+    max-width: 100%;
+    background-color: transparent;
+    border: 1px solid #dddddd;
+}
+
+th {
+    text-align: left;
+}
+
+.table {
+    width: 100%;
+    margin-bottom: 20px;
+    border-collapse: collapse;
+}
+
+.table th, .table td {
+    padding: 8px;
+    line-height: 1.428571429;
+    vertical-align: top;
+    border: 1px solid #dddddd;
+}
+
+.table th {
+    vertical-align: bottom;
+    background: #FAFAFA;
+}
+/* END bootstrap */
+
+.label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    margin-top: 15px;
+}
+.input{
+    background-color: #FFFFFF;
+    background-image: none;
+    border: 1px solid #CCCCCC;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    color: #272B30;
+    display: block;
+    font-size: 14px;
+    height: 34px;
+    line-height: 1.42857;
+    padding: 6px 12px;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+    vertical-align: middle;
+    width: 100%;
+}
+textarea.input{
+    height: 70px;
+    resize:none;
+}
+.section-title{
+    color: #999;
+    font-size: 20px;
+    font-weight: bold;
+}
+section button {
+    margin-left: 6px;
+}
+
+/* documenter inpage style */
+html{background-color:#EEEEEE;color:#383838;}
+::-moz-selection{background:#333636;color:#00DFFC;}
+::selection{background:#333636;color:#00DFFC;}
+#documenter_sidebar #documenter_logo {
+    background-image: url("../img/image_1.png");
+    color: #FFFFFF;
+    font-size: 10px;
+    font-weight: bold;
+    line-height: 40px;
+    text-align: right;
+    height: 90px
+}
+a{color:#008C9E;}
+.btn {
+    display: inline-block;
+    padding: 4px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.428571429;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    text-decoration: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+
+    color: #333333;
+    background-color: #ffffff;
+    border-color: #cccccc;
+}
+
+.btn:hover,
+.btn:focus,
+.btn:active {
+    color: #333333;
+    background-color: #ebebeb;
+    border-color: #adadad;
+    text-decoration: none;
+}
+.btn-primary {
+    background-image: -moz-linear-gradient(top, #008C9E, #006673);
+    background-image: -ms-linear-gradient(top, #008C9E, #006673);
+    background-image: -webkit-gradient(linear, 0 0, 0 008C9E%, from(#343838), to(#006673));
+    background-image: -webkit-linear-gradient(top, #008C9E, #006673);
+    background-image: -o-linear-gradient(top, #008C9E, #006673);
+    background-image: linear-gradient(top, #008C9E, #006673);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#008C9E', endColorstr='#006673', GradientType=0);
+    border-color: #006673 #006673 #bfbfbf;
+    color:#FFFFFF;
+}
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.btn-primary.disabled,
+.btn-primary[disabled] {
+    border-color: #008C9E #008C9E #bfbfbf;
+    background-color: #006673;
+    color:#FFFFFF;
+}
+hr{border-top:1px solid #D4D4D4;border-bottom:1px solid #FFFFFF;}
+#documenter_sidebar, #documenter_sidebar ul a{background-color:#343838;color:#FFFFFF;}
+#documenter_sidebar ul a{-webkit-text-shadow:1px 1px 0px #494F4F;-moz-text-shadow:1px 1px 0px #494F4F;text-shadow:1px 1px 0px #494F4F;}
+#documenter_sidebar ul{border-top:1px solid #212424;}
+#documenter_sidebar ul a{border-top:1px solid #494F4F;border-bottom:1px solid #212424;color:#FFFFFF;}
+#documenter_sidebar ul a:hover{background:#333636;color:#00DFFC;border-top:1px solid #333636;}
+#documenter_sidebar ul a.current{background:#333636;color:#00DFFC;border-top:1px solid #333636;}
+#documenter_copyright{display:block !important;visibility:visible !important;}
